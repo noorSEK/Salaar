@@ -62,8 +62,14 @@ echo "==================================="
 # 2️⃣ Enumerate subdomains using multiple tools
 echo "[+] Enumerating subdomains..."
 subfinder -dL bug_bounty_domains.txt >> subs-temp.txt
-amass enum -df $TARGETS -o amass-subs.txt
+amass enum -df bug_bounty_domains.txt -o amass-subs.txt
 cat bug_bounty_domains.txt | assetfinder --subs-only >> subs-temp.txt
-cat bug_bounty_domains.txt | while read domain; do curl -s "https://crt.sh/?q=%.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g'; done >> subs-temp.txt
+cat bug_bounty_domains.txt | while read domain; do curl -s "https://crt.sh/?q=%.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g'; done | sort -u >> subs-temp.txt
+cat bug_bounty_domains.txt | chaos -silent -key >> subs-temp.txt
 
-cat test1.txt | assetfinder --subs-only
+# Merge and sort unique subdomains
+cat amass-subs.txt subs-temp.txt | sort -u | tee subdomains.txt
+
+# Filtering out Dead Domains
+subs-temp.txt | httpx | tee live-subdomains.txt 
+
