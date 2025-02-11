@@ -24,6 +24,7 @@ sudo apt install -y whois
 sudo apt install -y nmap 
 sudo apt install -y masscan 
 sudo apt install -y tmux
+sudo apt install -y npm
 sudo apt install -y build-essential cmake make gcc 
 #---------------------------------------------------------------------------------------------------------------------
 #--------------------------------------Installing Go-Lang-------------------------------------------------------------
