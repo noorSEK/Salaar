@@ -75,14 +75,6 @@ rm amass-subs.txt subs-temp.txt
 subs-temp.txt | httpx | tee live-subdomains.txt 
 
 
-katana
-waybackurls
-hackrawler
-gau
-gauplus
-urlfinder
-
-
 # Crawl URLs and extract parameters & JS files
 cat subdomains.txt | katana -d 5 >> /opt/katana-urls.txt
 cat /opt/katana-urls.txt | grep = | qsreplace salaar >> /opt/katana-params.txt
@@ -156,9 +148,8 @@ cat params.txt | qsreplace '<u>hyper</u>' | while read host do ; do curl --silen
 cat params.txt | qsreplace 'https://example.com/' | while read host do ; do curl -s -L $host  | grep "<title>Example Domain</title>" && echo "$host" ; done | tee open-redirects.txt
 
 # Fuzzing Params for SSTi
-cat params.txt | while read url; do tplmap -u "$url"; done
+#cat params.txt | while read url; do tplmap -u "$url"; done
 
-# SQLMAP
 
 # Command Injection
 
@@ -176,4 +167,9 @@ cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s medium -rl 3 -c 
 cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s unknown -rl 3 -c 2 >> nuclei.txt
 cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s high -rl 3 -c 2 >> nuclei.txt
 cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s critical -rl 3 -c 2 >> nuclei.txt
+
+# SQLMAP
+#cat params.txt | python3 /opt/sqlmap.py --batch --banner 
+
+
 
