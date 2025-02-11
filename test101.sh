@@ -149,8 +149,31 @@ rm /opt/katana-wordpress.txt /opt/urlfinder-wordpress.txt /opt/hakrawler-wordpre
 cat js-files.txt | nuclei -t /root/nuclei-templates/http/exposures/ -nh >> nuclei-js-results.txt
 cat js-files.txt | mantra >> js-mantra-results.txt
 
-# Fuzzing Params 
+# Fuzzing Params for XSS
 cat params.txt | qsreplace '<u>hyper</u>' | while read host do ; do curl --silent --path-as-is -L --insecure "$host" | grep -qs "<u>hyper" && echo "$host"; done | tee htmli.txt 
 
+# Fuzzing Params for HTMli
+cat params.txt | qsreplace 'https://example.com/' | while read host do ; do curl -s -L $host  | grep "<title>Example Domain</title>" && echo "$host" ; done | tee open-redirects.txt
 
+# Fuzzing Params for SSTi
+cat params.txt | while read url; do tplmap -u "$url"; done
+
+# SQLMAP
+
+# Command Injection
+
+# LFI
+
+# 
+
+
+
+
+
+# Fuzzing Domains
+cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s low -rl 3 -c 2 >> nuclei.txt
+cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s medium -rl 3 -c 2 >> nuclei.txt
+cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s unknown -rl 3 -c 2 >> nuclei.txt
+cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s high -rl 3 -c 2 >> nuclei.txt
+cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s critical -rl 3 -c 2 >> nuclei.txt
 
