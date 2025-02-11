@@ -112,6 +112,18 @@ echo "[+]Installing urlfinder...."
 go install -v github.com/projectdiscovery/urlfinder/cmd/urlfinder@latest
 cp /root/go/bin/urlfinder /usr/local/bin
 
+echo "[+]Installing Chaos...."
+go install -v github.com/projectdiscovery/chaos-client/cmd/chaos@latest
+cp /root/go/bin/chaos /usr/local/bin
+
+echo "[+]Installing Hakrawler...."
+go install github.com/hakluke/hakrawler@latest
+cp /root/go/bin/hakrawler /usr/local/bin
 
 
-go install -v github.com/projectdiscovery/urlfinder/cmd/urlfinder@latest
+echo "[+] Installing Go-Lang....." 
+wget https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
+cp go1.23.4.linux-amd64.tar.gz /root/
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+go version
