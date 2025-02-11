@@ -169,7 +169,7 @@ cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s high -rl 3 -c 2 
 cat live-subdomains.txt  | nuclei -t /root/nuclei-templates/ -s critical -rl 3 -c 2 >> nuclei.txt
 
 # SQLMAP
-#cat params.txt | python3 /opt/sqlmap.py --batch --banner 
+#cat params.txt | grep -Ei 'select|report|role|update|query|user|name|sort|where|search|params|process|row|view|table|from|sel|results|sleep|fetch|order|keyword|column|field|delete|string|number|filter' | python3 /opt/sqlmap/sqlmap.py --batch --banner
 
 
 
