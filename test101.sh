@@ -65,14 +65,14 @@ subfinder -dL bug_bounty_domains.txt >> subs-temp.txt
 amass enum -df bug_bounty_domains.txt -o amass-subs.txt
 cat bug_bounty_domains.txt | assetfinder --subs-only >> subs-temp.txt
 cat bug_bounty_domains.txt | while read domain; do curl -s "https://crt.sh/?q=%.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g'; done | sort -u >> subs-temp.txt
-cat bug_bounty_domains.txt | chaos -silent -key >> subs-temp.txt
+cat bug_bounty_domains.txt | chaos -silent -key 6aa57816-004b-429c-a02b-d1344c1abeb7 >> subs-temp.txt
 
 # Merge and sort unique subdomains
 cat amass-subs.txt subs-temp.txt | sort -u | shuf | tee subdomains.txt
 rm amass-subs.txt subs-temp.txt
 
 # Filtering out Dead Domains
-subs-temp.txt | httpx | tee live-subdomains.txt 
+cat subs-temp.txt | httpx | tee live-subdomains.txt 
 
 
 # Crawl URLs and extract parameters & JS files
