@@ -121,6 +121,13 @@ echo "[+]Installing Hakrawler...."
 go install github.com/hakluke/hakrawler@latest
 cp /root/go/bin/hakrawler /usr/local/bin
 
+echo "[+]Installing Mantra...."
+go install github.com/Brosck/mantra@latest
+cp /root/go/bin/mantra /usr/local/bin
+
+
+go install github.com/Brosck/mantra@latest
+
 
 echo "[+] Installing Go-Lang....." 
 wget https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
