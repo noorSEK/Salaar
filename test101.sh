@@ -1,5 +1,8 @@
 #!/bin/bash
 
+python3 -m venv path/to/venv
+source path/to/venv/bin/activate
+
 # Default values
 LIMIT=10
 QUERY="inurl:/bug bounty"
