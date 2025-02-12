@@ -72,7 +72,7 @@ cat amass-subs.txt subs-temp.txt | sort -u | shuf | tee subdomains.txt
 rm amass-subs.txt subs-temp.txt
 
 # Filtering out Dead Domains
-cat subs-temp.txt | httpx | tee live-subdomains.txt 
+cat subdomains.txt | httpx | tee live-subdomains.txt 
 
 
 # Crawl URLs and extract parameters & JS files
