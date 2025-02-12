@@ -62,7 +62,7 @@ echo "==================================="
 # 2️⃣ Enumerate subdomains using multiple tools
 echo "[+] Enumerating subdomains..."
 subfinder -dL bug_bounty_domains.txt >> subs-temp.txt
-amass enum -df bug_bounty_domains.txt -o amass-subs.txt
+#amass enum -df bug_bounty_domains.txt -o amass-subs.txt
 cat bug_bounty_domains.txt | assetfinder --subs-only >> subs-temp.txt
 cat bug_bounty_domains.txt | while read domain; do curl -s "https://crt.sh/?q=%.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g'; done | sort -u >> subs-temp.txt
 cat bug_bounty_domains.txt | chaos -silent -key 6aa57816-004b-429c-a02b-d1344c1abeb7 >> subs-temp.txt
@@ -83,12 +83,12 @@ cat /opt/katana-urls.txt | grep -Ei "token=|key=|apikey=|access_token=|secret=|a
 cat /opt/katana-urls.txt | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/katana-wordpress.txt
 rm /opt/katana-urls.txt
 
-cat subdomains.txt | urlfinder >> /opt/urlfinder-urls.txt
-cat /opt/urlfinder-urls.txt | grep = | qsreplace salaar >> /opt/urlfinder-params.txt
-cat /opt/urlfinder-urls.txt | grep .js >> /opt/urlfinder-js-files.txt
-cat /opt/urlfinder-urls.txt | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/urlfinder-kong.txt
-cat /opt/urlfinder-urls.txt | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/urlfinder-wordpress.txt
-rm /opt/urlfinder-urls.txt
+#cat subdomains.txt | urlfinder >> /opt/urlfinder-urls.txt
+#cat /opt/urlfinder-urls.txt | grep = | qsreplace salaar >> /opt/urlfinder-params.txt
+#cat /opt/urlfinder-urls.txt | grep .js >> /opt/urlfinder-js-files.txt
+#cat /opt/urlfinder-urls.txt | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/urlfinder-kong.txt
+#cat /opt/urlfinder-urls.txt | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/urlfinder-wordpress.txt
+#rm /opt/urlfinder-urls.txt
 
 #cat /opt/katana-params.txt /opt/urlfinder-params.txt | sort -u >> /opt/help1-params.txt 
 #rm  /opt/katana-params.txt /opt/urlfinder-params.txt
@@ -105,23 +105,23 @@ cat /opt/hakrawler-urls.txt | grep -Ei "token=|key=|apikey=|access_token=|secret
 cat /opt/hakrawler-urls.txt | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/hakrawler-wordpress.txt
 rm /opt/hakrawler-urls.txt
 
-for domain in $(cat subdomains.txt); do  
-    curl -s "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original" | sort -u >> /opt/wayback-urls.txt  
-    sleep $((RANDOM % 5 + 3))  # Random delay (3-7 seconds)
-done
+#for domain in $(cat subdomains.txt); do  
+#    curl -s "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original" | sort -u >> /opt/wayback-urls.txt  
+#    sleep $((RANDOM % 5 + 3))  # Random delay (3-7 seconds)
+#done
 
-cat /opt/wayback-urls.txt   | grep = | qsreplace salaar >> /opt/way-params.txt
-cat /opt/wayback-urls.txt   | grep .js >> /opt/way-js-files.txt
-cat /opt/wayback-urls.txt   | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/way-kong.txt
-cat /opt/wayback-urls.txt   | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/way-wordpress.txt
-rm  /opt/wayback-urls.txt
+#cat /opt/wayback-urls.txt   | grep = | qsreplace salaar >> /opt/way-params.txt
+#cat /opt/wayback-urls.txt   | grep .js >> /opt/way-js-files.txt
+#cat /opt/wayback-urls.txt   | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/way-kong.txt
+#cat /opt/wayback-urls.txt   | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/way-wordpress.txt
+#rm  /opt/wayback-urls.txt
 
-cat live-subdomains.txt | gau >> /opt/hakrawler-urls.txt
-cat /opt/gau-urls.txt   | grep = | qsreplace salaar >> /opt/gau-params.txt
-cat /opt/gau-urls.txt   | grep .js >> /opt/gau-js-files.txt
-cat /opt/gau-urls.txt   | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/gau-kong.txt
-cat /opt/gau-urls.txt   | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/gau-wordpress.txt
-rm /opt/gau-urls.txt
+#cat live-subdomains.txt | gau >> /opt/hakrawler-urls.txt
+#cat /opt/gau-urls.txt   | grep = | qsreplace salaar >> /opt/gau-params.txt
+#cat /opt/gau-urls.txt   | grep .js >> /opt/gau-js-files.txt
+#cat /opt/gau-urls.txt   | grep -Ei "token=|key=|apikey=|access_token=|secret=|auth=|password=|session=|jwt=|bearer=|Authorization=|Bearer |eyJ|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY" >> /opt/gau-kong.txt
+#cat /opt/gau-urls.txt   | grep -Ei "wp-content|wp-login|wp-admin|wp-includes|wp-json|xmlrpc.php|wordpress|wp-config|wp-cron.php" >> /opt/gau-wordpress.txt
+#rm /opt/gau-urls.txt
 
 # Separating js Files, PArameters 
 cat /opt/katana-params.txt /opt/urlfinder-params.txt /opt/hakrawler-params.txt /opt/way-params.txt /opt/gau-params.txt | sort -u >> params.txt
